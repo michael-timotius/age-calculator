@@ -119,6 +119,7 @@
   <a href="#gates">Gates</a>
   <a href="#open">Open Items</a>
   <a href="#followup-2">Follow-up 2</a>
+  <a href="#followup-3">Follow-up 3</a>
 </nav>
 
 <div class="hero">
@@ -135,11 +136,11 @@
 
   <!-- STATS -->
   <div class="stats">
-    <div class="stat purple"><div class="num">66</div><div class="label">files changed</div></div>
-    <div class="stat teal"><div class="num">10</div><div class="label">new skills added</div></div>
-    <div class="stat green"><div class="num">55</div><div class="label">skills with full metadata</div></div>
-    <div class="stat green"><div class="num">9</div><div class="label">UX spec skills created</div></div>
-    <div class="stat warn"><div class="num">3</div><div class="label">open items remain</div></div>
+    <div class="stat purple"><div class="num">93</div><div class="label">total skills (core-api)</div></div>
+    <div class="stat teal"><div class="num">7</div><div class="label">domains covered</div></div>
+    <div class="stat green"><div class="num">4/4</div><div class="label">gates passing</div></div>
+    <div class="stat green"><div class="num">9</div><div class="label">UX spec skills</div></div>
+    <div class="stat warn"><div class="num">2</div><div class="label">accuracy gaps open</div></div>
   </div>
 
   <!-- SUMMARY -->
@@ -438,6 +439,77 @@
     </div>
   </section>
 
+  <!-- FOLLOW-UP 3 -->
+  <section id="followup-3">
+    <h2>🔁 Follow-up 3 — 2026-06-05 (core-api re-audit)</h2>
+    <p style="color:var(--muted);margin-bottom:1rem;font-size:.875rem">Full re-audit of all 93 core-api skills across 7 domains. All 4 gates pass. No hard failures. Two previously-flagged L4 failures confirmed resolved. Two non-blocking accuracy gaps remain open.</p>
+
+    <div class="card pass">
+      <h3>All 4 gates — clean pass</h3>
+      <table style="margin-top:.75rem">
+        <tr><th>Gate</th><th>Result</th><th>Notes</th></tr>
+        <tr><td>Gate 1 — <code>skill-metadata-valid</code></td><td><span class="pill pill-green">PASS</span></td><td>All 93 skills have required frontmatter. <code>user-invocable</code> spelling consistent. Both previously-failing L4 skills confirmed fixed.</td></tr>
+        <tr><td>Gate 2 — <code>layer-completeness</code></td><td><span class="pill pill-green">PASS</span></td><td>Prior stale findings on <code>messaging-system-domain-map</code> and <code>community-concept-visibility</code> were false positives — confirmed correct on re-read.</td></tr>
+        <tr><td>Gate 3 — <code>language-boundary-clean</code></td><td><span class="pill pill-green">PASS</span></td><td>No HTTP methods, column names, or model names leak into L1–L4. <code>rewards-concept-point-mutation-log</code> L5 navigation refs are advisory only.</td></tr>
+        <tr><td>Gate 4 — <code>cross-references-valid</code></td><td><span class="pill pill-green">PASS</span></td><td>All referenced skills exist and are <code>ready</code>. <code>notification-system-impl-be-api-map</code> is a valid redirect stub to superseding skill.</td></tr>
+      </table>
+    </div>
+
+    <div class="card pass">
+      <h3>Previously-failing L4 skills — confirmed resolved</h3>
+      <table style="margin-top:.75rem">
+        <tr><th>Skill</th><th>Previous failure</th><th>Status</th></tr>
+        <tr><td><code>progression-system-ux-activation</code></td><td><code>user-invocable: false</code> present on L4 skill (should be omitted)</td><td><span class="pill pill-green">RESOLVED</span></td></tr>
+        <tr><td><code>progression-system-ux-template-management</code></td><td><code>user-invocable: false</code> present on L4 skill (should be omitted)</td><td><span class="pill pill-green">RESOLVED</span></td></tr>
+      </table>
+    </div>
+
+    <div class="card warn">
+      <h3>Accuracy gap — <code>Progression::TierCheckpointUpdater</code> undocumented</h3>
+      <p>
+        <code>rewards-impl-service-map</code> (line 322) names <code>Progression::TierCheckpointUpdater.call!(...)</code> as the service called on exchange-request completion. This class is <strong>absent</strong> from <code>progression-system-impl-service-map</code> entirely.
+      </p>
+      <p style="margin-top:.6rem;color:var(--muted);font-size:.85rem">
+        Impact: an agent working from the progression service map on Tier EXP reward completion will not know this class exists and may generate a duplicate or incorrect call.<br>
+        Fix: add <code>Progression::TierCheckpointUpdater</code> to the progression service map's service-classes table with its file path and one-line responsibility.
+      </p>
+    </div>
+
+    <div class="card warn">
+      <h3>Accuracy gap — CLAUDE.md Obfuscator prefix table missing 3 entries</h3>
+      <p>Three model prefixes documented in impl skills are absent from the CLAUDE.md Obfuscator ID Prefixes table:</p>
+      <table style="margin-top:.75rem">
+        <tr><th>Model</th><th>Prefix</th><th>Documented in</th></tr>
+        <tr><td><code>CommunitySetting</code></td><td><code>commset_</code></td><td><code>community-settings-impl-table-map</code></td></tr>
+        <tr><td><code>Notification</code></td><td><code>notif_</code></td><td><code>notification-system-impl-table-map</code></td></tr>
+        <tr><td><code>InviteLink</code></td><td><code>invlink_</code></td><td><code>community-impl-invite-link-table-map</code></td></tr>
+      </table>
+      <p style="margin-top:.6rem;color:var(--muted);font-size:.85rem">Impact: an agent consulting CLAUDE.md for prefix validation before writing code will not find these and may generate a duplicate prefix.<br>Fix: add all three rows to the CLAUDE.md Obfuscator ID Prefixes table.</p>
+    </div>
+
+    <div class="card info">
+      <h3>Advisory (non-blocking)</h3>
+      <ul style="margin-left:1rem;margin-top:.25rem;line-height:2;font-size:.875rem">
+        <li><code>rewards-concept-point-mutation-log</code> (L2) references two L5 impl skills (<code>rewards-impl-table-map</code>, <code>rewards-impl-service-map</code>) in its Related Skills section — governance-meta flags L5 refs from L1–L4 as an anti-pattern. Since references are in navigation only (not inline content), risk is low.</li>
+        <li><code>community-concept-visibility</code> — "Status: <strong>PLANNED — not yet in schema</strong>" annotation is implementation-adjacent. Rephrase to "this field is not yet deployed" for cleaner language boundary.</li>
+      </ul>
+    </div>
+
+    <div class="card info">
+      <h3>Domain summary (93 skills, 7 domains)</h3>
+      <table style="margin-top:.75rem">
+        <tr><th>Domain</th><th>Skills</th><th>Gate status</th></tr>
+        <tr><td><code>circlecrest-architecture-profile</code> (L0)</td><td>1</td><td><span class="pill pill-green">PASS</span></td></tr>
+        <tr><td><code>community</code></td><td>11</td><td><span class="pill pill-green">PASS</span></td></tr>
+        <tr><td><code>community-settings</code></td><td>5</td><td><span class="pill pill-green">PASS</span></td></tr>
+        <tr><td><code>messaging-system</code></td><td>13</td><td><span class="pill pill-green">PASS</span></td></tr>
+        <tr><td><code>notification-system</code></td><td>6</td><td><span class="pill pill-green">PASS</span></td></tr>
+        <tr><td><code>progression-system</code></td><td>24</td><td><span class="pill pill-green">PASS</span></td></tr>
+        <tr><td><code>rewards</code></td><td>4</td><td><span class="pill pill-green">PASS</span> — TierCheckpointUpdater gap is accuracy-only</td></tr>
+      </table>
+    </div>
+  </section>
+
   <!-- FOLLOW-UP 2 -->
   <section id="followup-2">
     <h2>🔄 Follow-up 2 — 2026-06-05 (web-ui)</h2>
@@ -507,7 +579,7 @@
 </div>
 
 <footer>
-  <p>Branch: <a href="https://github.com/CircleCrest/circlecrest-core-api/tree/skill-governance-audit">skill-governance-audit</a> &nbsp;·&nbsp; 66 files changed &nbsp;·&nbsp; 2026-06-03 &nbsp;·&nbsp; Last updated: 2026-06-05</p>
+  <p>Branch: <a href="https://github.com/CircleCrest/circlecrest-core-api/tree/skill-governance-audit">skill-governance-audit</a> &nbsp;·&nbsp; 93 skills audited &nbsp;·&nbsp; 2026-06-03 &nbsp;·&nbsp; Last updated: 2026-06-05 (Follow-up 3 — core-api re-audit)</p>
 </footer>
 
 </body>
