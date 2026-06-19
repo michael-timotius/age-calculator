@@ -1048,6 +1048,32 @@ Then the notification is not found</pre>
 
   </section>
 
+  <!-- FOLLOW-UP 2026-06-19c -->
+  <section id="followup-2026-06-19c">
+    <h2>🔄 Follow-up — 2026-06-19c (Omissions Audit — messaging room name)</h2>
+
+    <div class="card">
+      <h3>Issue — messaging (Low-Medium): community room name has no validation constraints or display spec</h3>
+      <p>Room name existed in the Parameters table as a one-liner with no constraints, truncation behavior, or display convention. Fixed across 3 skills:</p>
+      <table style="margin-top:.75rem">
+        <tr><th>Skill</th><th>Change</th></tr>
+        <tr>
+          <td><code>messaging-system-ops-create-room</code> v1.1.0</td>
+          <td>Name param expanded: max 50 chars, any printable characters, non-blank, no uniqueness constraint. 2 new decision rules: blank → error, exceeds 50 chars → error.</td>
+        </tr>
+        <tr>
+          <td><code>messaging-system-ux-room-list</code> v1.1.0</td>
+          <td>Room name display: community rooms → stored name; direct rooms → participant display name (server-resolved). Truncation: 25 chars with "…". No # or @ prefix.</td>
+        </tr>
+        <tr>
+          <td><code>messaging-system-ux-chat-room</code> v1.1.0</td>
+          <td>Room header section added: full room name displayed, no prefix convention, no client-side truncation in header.</td>
+        </tr>
+      </table>
+    </div>
+
+  </section>
+
   <!-- OPEN ITEMS -->
   <section id="open">
     <h2>⚠️ Open Items (non-blocking)</h2>

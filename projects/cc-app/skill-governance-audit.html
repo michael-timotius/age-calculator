@@ -915,6 +915,32 @@ And Admin A still sees it (marked as hidden)</pre>
 
   </section>
 
+  <!-- FOLLOW-UP 2026-06-19c -->
+  <section id="followup-2026-06-19c">
+    <h2>🔄 Follow-up — 2026-06-19c (Omissions Audit — messaging room name)</h2>
+
+    <div class="card">
+      <h3>Issue — messaging (Low-Medium): community room name has no validation constraints or display spec</h3>
+      <p>Room name existed in the Parameters table as a one-liner with no constraints, truncation behavior, or display convention. Fixed across 3 skills in both repos:</p>
+      <table style="margin-top:.75rem">
+        <tr><th>Skill</th><th>Change</th></tr>
+        <tr>
+          <td><code>messaging-system-ops-create-room</code> v1.1.0</td>
+          <td>Name param expanded: max 50 chars, any printable characters, non-blank, no uniqueness constraint. 2 new decision rules added: blank name → validation error; name exceeds 50 chars → validation error with message.</td>
+        </tr>
+        <tr>
+          <td><code>messaging-system-ux-room-list</code> v1.1.0</td>
+          <td>Room name display spec: community rooms → stored room name; direct rooms → other participant's display name (server-resolved). Truncation: 25 chars with "…". No prefix convention (#/@).</td>
+        </tr>
+        <tr>
+          <td><code>messaging-system-ux-chat-room</code> v1.1.0</td>
+          <td>Room header section added: full room name, no prefix convention, no client-side truncation in header. Community rooms vs direct rooms display distinguished.</td>
+        </tr>
+      </table>
+    </div>
+
+  </section>
+
   <!-- OPEN ITEMS -->
   <section id="open">
     <h2>⚠️ Open Items (non-blocking)</h2>
