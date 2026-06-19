@@ -884,6 +884,37 @@ And Admin A still sees it (marked as hidden)</pre>
 
   </section>
 
+  <!-- FOLLOW-UP 2026-06-19 -->
+  <section id="followup-2026-06-19">
+    <h2>🔄 Follow-up — 2026-06-19 (Skill Omissions Audit)</h2>
+
+    <div class="card info">
+      <h3>Context</h3>
+      <p>Cross-skill audit comparing every L3 ops and L4 UX skill against the corresponding L5 impl maps. Found 3 omission categories across 3 domains. Fixes applied to core-api skills where relevant (issues #2 and #3).</p>
+    </div>
+
+    <div class="card">
+      <h3>Issue #2 — community (MEDIUM): missing ops + UX skills for update-community-details</h3>
+      <p><code>community-impl-service-map</code> documented the <code>#update</code> action (PUT <code>/api/communities/:sid</code>) but no L3 ops or L4 UX skill covered it. 2 new skills created:</p>
+      <table style="margin-top:.75rem">
+        <tr><th>Skill</th><th>Layer</th><th>Covers</th></tr>
+        <tr><td><code>community-ops-update-details</code></td><td>L3</td><td>Admin guard, <code>community_params</code> whitelist, naming rule validation, CarrierWave logo upload, response shape, error codes</td></tr>
+        <tr><td><code>community-ux-edit-details</code></td><td>L4</td><td>Edit Community form — name, description, logo upload, validation states, success/error feedback</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Issue #3 — messaging (LOW): attachment constraints underspecified</h3>
+      <p><code>messaging-system-ops-send-message</code> v1.0.0 → v1.1.0: allowed format list added to preconditions (<code>.jpg</code>, <code>.jpeg</code>, <code>.gif</code>, <code>.png</code>, <code>.pdf</code>); decision rules rows expanded to name allowed formats; new "User-facing feedback (attachment validation)" section added with specific error messages.</p>
+    </div>
+
+    <div class="card info">
+      <h3>Issue #1 — rewards (HIGH): web-ui only</h3>
+      <p>4 missing fields in <code>rewards-ops-award-points</code> / <code>rewards-ux-admin-management</code> fixed in <code>circlecrest-web-ui</code> skills only — no core-api rewards ops or UX skills exist in this repo.</p>
+    </div>
+
+  </section>
+
   <!-- OPEN ITEMS -->
   <section id="open">
     <h2>⚠️ Open Items (non-blocking)</h2>
