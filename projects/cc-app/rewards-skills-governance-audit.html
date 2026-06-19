@@ -1074,40 +1074,6 @@ Then the notification is not found</pre>
 
   </section>
 
-  <!-- FOLLOW-UP 2026-06-19d -->
-  <section id="followup-2026-06-19d">
-    <h2>🔄 Follow-up — 2026-06-19d (Omissions Audit — user-profile domain)</h2>
-
-    <div class="card">
-      <h3>Issue — user-profile (High): entire self-profile editing domain undocumented</h3>
-      <p>No skills existed for user profile viewing or editing in either repo. Created 4 new skills (L1–L4) in both repos:</p>
-      <table style="margin-top:.75rem">
-        <tr><th>Skill</th><th>Layer</th><th>What it covers</th></tr>
-        <tr>
-          <td><code>user-profile-domain-map</code> v1.0.0</td>
-          <td>L1 domain map</td>
-          <td>Bounded context, key entities (User/Person), API surface (<code>GET /api/user</code>, <code>PUT /api/communities/:sid/user</code>), frontend entry point (<code>/:community_sid/profile</code>), cross-domain dependencies.</td>
-        </tr>
-        <tr>
-          <td><code>user-profile-concept-person</code> v1.0.0</td>
-          <td>L2 concept</td>
-          <td>Person/User entity fields, editable vs read-only, JSON-LD response shape, Cerebral state mapping, validation rules (name required, frontend Swal guard + backend 422).</td>
-        </tr>
-        <tr>
-          <td><code>user-profile-ops-update-profile</code> v1.0.0</td>
-          <td>L3 ops</td>
-          <td>PUT workflow: FormData construction, selective param appending, sequence (guard → confirm → PUT → toast), success/error response shapes, save button disabled conditions for both forms.</td>
-        </tr>
-        <tr>
-          <td><code>user-profile-ux-profile-page</code> v1.0.0</td>
-          <td>L4 UX</td>
-          <td>Three sub-views: profile show (avatar, progression cards, read-only fields, nav buttons), edit form (avatar upload with preview, name editable, email read-only), settings form (timezone picker, notifications toggle). Entry point, navigation, success/error feedback documented.</td>
-        </tr>
-      </table>
-    </div>
-
-  </section>
-
   <!-- OPEN ITEMS -->
   <section id="open">
     <h2>⚠️ Open Items (non-blocking)</h2>
