@@ -1108,44 +1108,6 @@ Then the notification is not found</pre>
 
   </section>
 
-  <!-- FOLLOW-UP 2026-06-19e -->
-  <section id="followup-2026-06-19e">
-    <h2>🔄 Follow-up — 2026-06-19e (Omissions Audit — community settings &amp; edit-details)</h2>
-
-    <div class="card">
-      <h3>Finding 1 — community-settings screen (false positive): stale "Planned" markers resolved</h3>
-      <p>The auditor concluded the community settings screen was unimplemented because impl skills contained stale <code>[Planned]</code> / <code>Planned —</code> markers on the visibility dropdown. The screen and all its fields were already implemented. Stale markers removed:</p>
-      <table style="margin-top:.75rem">
-        <tr><th>Skill</th><th>Change</th></tr>
-        <tr>
-          <td><code>community-impl-fe-api-map</code> v1.1.0</td>
-          <td>Removed "Planned" label from <code>updateCommunityVisibility</code> row and from <code>additionalProperty</code> response note. Added <code>Surfaces workflows</code> section cross-referencing <code>community-ops-update-details</code>, <code>community-ops-set-visibility</code>, <code>community-settings-ops-manage-settings</code>.</td>
-        </tr>
-        <tr>
-          <td><code>community-impl-fe-component-map</code> v1.1.0</td>
-          <td>Removed <code>[Planned]</code> from visibility dropdown in settings tree. Removed "planned —" from module state comments. Updated dropdown element description to match implemented <code>BasicDropdown</code>. Added pointer to <code>community-settings-impl-fe-component-map</code> for full tree.</td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="card">
-      <h3>Finding 2 — community edit-details (false positive): skills exist; logo constraints added</h3>
-      <p><code>community-ops-update-details</code> (L3) and <code>community-ux-edit-details</code> (L4) were created in a prior audit pass (2026-06-19). The auditor missed them. Logo file constraints were missing — added to both skills:</p>
-      <table style="margin-top:.75rem">
-        <tr><th>Skill</th><th>Change</th></tr>
-        <tr>
-          <td><code>community-ux-edit-details</code> v1.1.0</td>
-          <td>Logo interactive element: accepted types jpg/jpeg/gif/png, max 2 MB. Form behavior table: logo constraint row added.</td>
-        </tr>
-        <tr>
-          <td><code>community-ops-update-details</code> v1.1.0</td>
-          <td>Preconditions: logo file type/size noted. Validation table: CarrierWave type/size check → 422.</td>
-        </tr>
-      </table>
-    </div>
-
-  </section>
-
   <!-- OPEN ITEMS -->
   <section id="open">
     <h2>⚠️ Open Items (non-blocking)</h2>
