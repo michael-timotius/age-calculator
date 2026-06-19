@@ -1030,6 +1030,24 @@ Then the notification is not found</pre>
 
   </section>
 
+  <!-- FOLLOW-UP 2026-06-19b -->
+  <section id="followup-2026-06-19b">
+    <h2>🔄 Follow-up — 2026-06-19b (Omissions Audit #4)</h2>
+
+    <div class="card">
+      <h3>Issue #4 — rewards (MEDIUM): catalog row tap deferred as "implementation-dependent"</h3>
+      <p><code>rewards-ux-admin-management</code> screen 2 (Catalog Management List) row tap was marked <em>"implementation-dependent"</em> — an explicit abdication of a UX decision. Fixed in v1.2.0:</p>
+      <ul style="margin-left:1.2rem;line-height:2;font-size:.875rem">
+        <li>Row tap now commits to a concrete behavior: opens <strong>Item Detail (read-only)</strong> sheet (new screen 2b)</li>
+        <li>Screen 2b fully specced: all item fields as non-interactive elements; Disable button (shown only when status = Available); back navigation; loading/success/error states</li>
+        <li>Screens Covered list updated to include "2b. Item Detail (read-only)"</li>
+        <li>Entry Points table updated: Item Detail entry = tap row on Catalog Management List</li>
+        <li>Navigation Behavior section updated with Item Detail nav rules</li>
+      </ul>
+    </div>
+
+  </section>
+
   <!-- OPEN ITEMS -->
   <section id="open">
     <h2>⚠️ Open Items (non-blocking)</h2>
