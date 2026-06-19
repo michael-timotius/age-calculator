@@ -941,6 +941,40 @@ And Admin A still sees it (marked as hidden)</pre>
 
   </section>
 
+  <!-- FOLLOW-UP 2026-06-19d -->
+  <section id="followup-2026-06-19d">
+    <h2>🔄 Follow-up — 2026-06-19d (Omissions Audit — user-profile domain)</h2>
+
+    <div class="card">
+      <h3>Issue — user-profile (High): entire self-profile editing domain undocumented</h3>
+      <p>No skills existed for user profile viewing or editing in either repo. Created 4 new skills (L1–L4) in both repos:</p>
+      <table style="margin-top:.75rem">
+        <tr><th>Skill</th><th>Layer</th><th>What it covers</th></tr>
+        <tr>
+          <td><code>user-profile-domain-map</code> v1.0.0</td>
+          <td>L1 domain map</td>
+          <td>Bounded context, key entities (User/Person), API surface (<code>GET /api/user</code>, <code>PUT /api/communities/:sid/user</code>), frontend entry point (<code>/:community_sid/profile</code>), cross-domain dependencies.</td>
+        </tr>
+        <tr>
+          <td><code>user-profile-concept-person</code> v1.0.0</td>
+          <td>L2 concept</td>
+          <td>Person/User entity fields, editable vs read-only, JSON-LD response shape, model columns, accepted update params, validation rules (name presence, backend 422).</td>
+        </tr>
+        <tr>
+          <td><code>user-profile-ops-update-profile</code> v1.0.0</td>
+          <td>L3 ops</td>
+          <td>PUT workflow: controller action (<code>UsersController#update</code>), accepted params, nested <code>person_attributes</code>, success JSON-LD, error responses (422 name blank, 401 JWT), picture string-vs-file branch.</td>
+        </tr>
+        <tr>
+          <td><code>user-profile-ux-profile-page</code> v1.0.0</td>
+          <td>L4 UX</td>
+          <td>Three sub-views: profile show, edit form (avatar + name), settings form (timezone + notifications). Entry point URL, back-nav targets, success/error feedback documented.</td>
+        </tr>
+      </table>
+    </div>
+
+  </section>
+
   <!-- OPEN ITEMS -->
   <section id="open">
     <h2>⚠️ Open Items (non-blocking)</h2>
